@@ -1,32 +1,36 @@
 package com.spaceurraca.urraca.api;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/")
 public class UruController {
 
-    // @Autowired
-    // private ElementRepository repo;
+     @Autowired
+     private MyElementRepository repo;
+//
+//    @GetMapping("/")
+//    public String showIndex() {
+//        return "index.html"; // This will look for "index.html" in "resources/static"
+//    }
+//
+//    @GetMapping("/col")
+//    public String showWelcomePage() {
+//        return "collection.html"; // This will look for "welcome.html" in "resources/static"
+//    }
 
-    @GetMapping("/")
-    public String showIndex() {
-        return "index.html"; // This will look for "index.html" in "resources/static"
-    }
 
-    @GetMapping("/col")
-    public String showWelcomePage() {
-        return "collection.html"; // This will look for "welcome.html" in "resources/static"
-    }
-
-
-    // @GetMapping
-    // public List<Element> getAllEntities(){
-    //     return repo.findAll();
-    // }
+     @GetMapping("/myElements")
+     public List<MyElement> getAllElements(){
+         return repo.findAll();
+     }
 
 
     // @GetMapping("/{id}")

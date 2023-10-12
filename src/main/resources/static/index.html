@@ -11,14 +11,14 @@
 <body>
 
 
-<div class="container-fluid">
+<div class="container">
     <nav class="navbar navbar-expand-md  navbar-light bg-light">
         <a class="navbar-brand" href="#">Urraca Space</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+    
         <div class="collapse navbar-collapse" id="navbarDropdown">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
@@ -46,11 +46,28 @@
             </ul>
         </div>
     </nav>
-    
     <div class="row d-flex justify-content-center bg-secondary text-white ">
         <div class="col-9">
             <div class="row">
                 <h3>You are in the next best place to upload your photos</h3>
+                <div id="showElements">
+                    <script>
+                        fetch('/myElements')
+                        .then(response => response.json())
+                        .then(data => {
+                            const elementList = document.querySelector('#showElements');
+                            console.log('en el script');
+                            console.log(data);
+                            data.forEach(element => {
+                                elementList.innerHtml = element.name;
+                                const elementDiv = document.createElement('div.col-3');
+                                elementDiv.textContent = element.name;
+                                elementList.appendChild(elementDiv);
+                            })
+                        })
+                        .catch(error => console.error(error));
+                    </script>
+                </div>
             </div>
 
         </div>

@@ -3,7 +3,7 @@ package com.spaceurraca.urraca.api;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "my_collection")
+@Document(collection = "uru1")
 public class MyElement {
     @Id
     public String id;
