@@ -17,9 +17,9 @@ public class UruController {
         return "index.html"; // This will look for "index.html" in "resources/static"
     }
 
-    @GetMapping("/wel")
+    @GetMapping("/col")
     public String showWelcomePage() {
-        return "welcome.html"; // This will look for "welcome.html" in "resources/static"
+        return "collection.html"; // This will look for "welcome.html" in "resources/static"
     }
 
 
