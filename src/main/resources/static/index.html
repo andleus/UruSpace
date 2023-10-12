@@ -31,7 +31,7 @@
                     <a class="nav-link" href="#">Favorites</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Upload</a>
+                    <a class="nav-link" href="upload.html">Upload</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -50,7 +50,7 @@
         <div class="col-9">
             <div class="row">
                 <h3>You are in the next best place to upload your photos</h3>
-                <div id="showElements">
+                <div id="showElements" class="row">
                     <script>
                         fetch('/myElements')
                         .then(response => response.json())
@@ -60,7 +60,8 @@
                             console.log(data);
                             data.forEach(element => {
                                 elementList.innerHtml = element.name;
-                                const elementDiv = document.createElement('div.col-3');
+                                const elementDiv = document.createElement('div');
+                                elementDiv.className = 'col-3'
                                 elementDiv.textContent = element.name;
                                 elementList.appendChild(elementDiv);
                             })
