@@ -60,10 +60,11 @@
                             console.log(data);
                             data.forEach(element => {
                                 elementList.innerHtml = element.name;
-                                const elementDiv = document.createElement('div');
-                                elementDiv.className = 'col-3'
-                                elementDiv.textContent = element.name;
-                                elementList.appendChild(elementDiv);
+                                const elementImg = document.createElement('img');
+                                elementImg.className = 'col-3'
+                                elementImg.src = './images/' + element.filename;
+                                elementImg.textContent = element.name;
+                                elementList.appendChild(elementImg);
                             })
                         })
                         .catch(error => console.error(error));

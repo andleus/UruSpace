@@ -2,11 +2,15 @@ package com.spaceurraca.urraca.api;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -15,22 +19,37 @@ public class UruController {
 
      @Autowired
      private MyElementRepository repo;
-//
-//    @GetMapping("/")
-//    public String showIndex() {
-//        return "index.html"; // This will look for "index.html" in "resources/static"
-//    }
-//
-//    @GetMapping("/col")
-//    public String showWelcomePage() {
-//        return "collection.html"; // This will look for "welcome.html" in "resources/static"
-//    }
 
+     @Value("${upload.path}")
+     private String uploadPath;
 
      @GetMapping("/myElements")
      public List<MyElement> getAllElements(){
          return repo.findAll();
      }
+
+      @PostMapping("/upFile")
+      public ResponseEntity uploadMagpie(   @RequestPart("name") String name,
+                                            @RequestPart("image") MultipartFile image   ){
+
+         try{
+             String filename = image.getOriginalFilename();
+
+             File file = new File(   System.getProperty("user.dir") + uploadPath + File.separator + filename);
+             System.out.println(file);
+             image.transferTo(file);
+
+             MyElement element = new MyElement(name, filename);
+             repo.save(element);
+
+             return ResponseEntity.status(200).body("Upload successful, fly little magpie");
+
+         }catch(Exception e){
+//             e.printStackTrace();
+             return ResponseEntity.status(500).body("ERROR UPLOADING THE IMAGE");
+          }
+
+      }
 
 
     // @GetMapping("/{id}")
@@ -38,10 +57,6 @@ public class UruController {
     //     return repo.findById(id).orElse(null);
     // }
 
-    // @PostMapping
-    // public Element createEntity(@RequestBody Element entity){
-    //     return repo.save(entity);
-    // }
 
     // @PutMapping("/{id}")
     // public Element updateEntity(@PathVariable String id, @RequestBody Element updatedEntity){
