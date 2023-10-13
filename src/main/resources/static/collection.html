@@ -14,7 +14,6 @@
 <div class="container">
     <nav class="navbar navbar-expand-md  navbar-light bg-light">
         <a class="navbar-brand" href="index.html">Urraca Space</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,7 +46,7 @@
             </div>
     </nav>
     <div class="row d-flex justify-content-center bg-secondary text-white ">
-        <div class="col-9">
+        <div class="col-10">
             <div class="row">
                 <h3>Here is your collection</h3>
                 <div id="showElements" class="row">
@@ -98,6 +97,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    function stay(event){
+        event.preventDefault();
+
+        const formData = new FormData(document.querySelector("#uploadFiles"));
+
+        fetch('/upFile', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            window.location.href = window.location.href;
+        });
+    }
+</script>
 
 </body>
 </html>

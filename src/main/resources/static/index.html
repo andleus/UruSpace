@@ -14,7 +14,6 @@
 <div class="container">
     <nav class="navbar navbar-expand-md  navbar-light bg-light">
         <a class="navbar-brand" href="index.html">Urraca Space</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,7 +46,7 @@
             </div>
     </nav>
     <div class="row d-flex justify-content-center bg-secondary text-white ">
-        <div class="col-9">
+        <div class="col-10">
             <div class="row">
                 <h1>WELCOME TO URRACA-SPACE</h1>
                 <h3>You are in the next best place to upload your photos</h3>
@@ -57,15 +56,42 @@
                         .then(response => response.json())
                         .then(data => {
                             const elementList = document.querySelector('#showElements');
-                            console.log('en el script');
-                            console.log(data);
                             data.forEach(element => {
-                                elementList.innerHtml = element.name;
+                                const imgContainer = document.createElement('div');
+                                imgContainer.className = 'col-3 mb-3';
+
+                                const buttonImg = document.createElement('button');
+                                buttonImg.className = 'btn-close';
+                                buttonImg.type = 'button';
+                                buttonImg.addEventListener('click', () => {
+                                    console.log(element.id);
+                                    fetch(`/delete/${element.id}`, {
+                                        method: 'DELETE'
+                                    })
+                                    .then(response => {
+                                        window.location.href = window.location.href;
+                                    });
+                                })
+                                //  = console.log(element.id);
+                                // buttonImg.onclick = fetch(`/${element.id}`, {
+                                //                         method: 'DELETE',
+                                //                         body:  {
+                                //                             id: element.id
+                                //                         },
+                                //                     })
+                                //                     .then(response => {
+                                //                         window.location.href = window.location.href;
+                                //                     });
+
+                                // elementList.innerHtml = element.name;
                                 const elementImg = document.createElement('img');
-                                elementImg.className = 'col-3'
+                                elementImg.className = 'img-fluid rounded'
                                 elementImg.src = './images/' + element.filename;
                                 elementImg.textContent = element.name;
-                                elementList.appendChild(elementImg);
+
+                                imgContainer.appendChild(buttonImg);
+                                imgContainer.appendChild(elementImg);
+                                elementList.appendChild(imgContainer)
                             })
                         })
                         .catch(error => console.error(error));

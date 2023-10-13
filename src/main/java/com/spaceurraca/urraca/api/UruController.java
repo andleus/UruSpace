@@ -17,39 +17,44 @@ import java.util.List;
 @RequestMapping("/")
 public class UruController {
 
-     @Autowired
-     private MyElementRepository repo;
+    @Autowired
+    private MyElementRepository repo;
 
-     @Value("${upload.path}")
-     private String uploadPath;
+    @Value("${upload.path}")
+    private String uploadPath;
 
-     @GetMapping("/myElements")
-     public List<MyElement> getAllElements(){
-         return repo.findAll();
-     }
+    @GetMapping("/myElements")
+    public List<MyElement> getAllElements(){
+        return repo.findAll();
+    }
 
-      @PostMapping("/upFile")
-      public ResponseEntity uploadMagpie(   @RequestPart("name") String name,
-                                            @RequestPart("image") MultipartFile image   ){
+    @PostMapping("/upFile")
+    public ResponseEntity uploadMagpie(   @RequestPart("name") String name,
+                                        @RequestPart("image") MultipartFile image   ){
 
-         try{
-             String filename = image.getOriginalFilename();
+        try{
+            String filename = image.getOriginalFilename();
 
-             File file = new File(   System.getProperty("user.dir") + uploadPath + File.separator + filename);
-             System.out.println(file);
-             image.transferTo(file);
+            File file = new File(   System.getProperty("user.dir") + uploadPath + File.separator + filename);
+            System.out.println(file);
+            image.transferTo(file);
 
-             MyElement element = new MyElement(name, filename);
-             repo.save(element);
+            MyElement element = new MyElement(name, filename);
+            repo.save(element);
 
-             return ResponseEntity.ok("Upload successful, fly little magpie");
+            return ResponseEntity.ok("Upload successful, fly little magpie");
 
-         }catch(Exception e){
-//             e.printStackTrace();
-             return ResponseEntity.status(500).body("ERROR UPLOADING THE IMAGE");
-          }
+        }catch(Exception e){
+    //             e.printStackTrace();
+            return ResponseEntity.status(500).body("ERROR UPLOADING THE IMAGE");
+        }
 
-      }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteEntity(@PathVariable String id){
+        repo.deleteById(id);
+    }
 
 
     // @GetMapping("/{id}")
@@ -64,9 +69,6 @@ public class UruController {
     //     return repo.save(updatedEntity);
     // }
 
-    // @DeleteMapping("/{id}")
-    // public void deleteEntity(@PathVariable String id){
-    //     repo.deleteById(id);
-    // }
+
 
 }
