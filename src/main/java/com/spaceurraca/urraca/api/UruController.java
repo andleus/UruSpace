@@ -42,7 +42,7 @@ public class UruController {
              MyElement element = new MyElement(name, filename);
              repo.save(element);
 
-             return ResponseEntity.status(200).body("Upload successful, fly little magpie");
+             return ResponseEntity.ok("Upload successful, fly little magpie");
 
          }catch(Exception e){
 //             e.printStackTrace();
